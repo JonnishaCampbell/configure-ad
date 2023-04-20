@@ -38,18 +38,18 @@ This tutorial outlines the implementation of on-premises Active Directory within
 	- Create a Domain Controller VM, Windows Server 2022, and name it DC-1
 	- Set the Domain Controller's NIC private IP address to be static
 	- Create a Client VM, Windows 10, and name it Client-1
-		- Use the same resource group and Vnet created in previous step
-	- Go to Network Watcher and check topology (making sure that the Resource group and Virtual machine is running on the same virtual network)
+		- Use the same resource group and Vnet created in the previous step
+	- Go to Network Watcher and check topology (making sure that the Resource group and Virtual machine are running on the same virtual network)
 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 2. Ensure Connectivity between the client and domain controller VM
-	- Use remote desktop to log into Client-1 and ping DC-1 private IP address (ping -t ip address)
+	- Use remote desktop to log into Client-1 and ping DC-1 private IP address (ping -t IP address)
 	- Log into DC-1 and enable ICMPv4 on windows local firewall
 		- This allows DC-1 to accept ICMP traffic
-	- Go back to Client-1 command prompt to see if ping is successful
+	- Go back to the Client-1 command prompt to see if the ping is successful
 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -57,27 +57,27 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 3. Install Active Directory
 	- Install Active Directory Domain Services in DC-1
-	- Promote it as a domain controller and setup a new forest as mydomain.com or anything else. I'll be using jcdomain.com
-	- Restart the machine and log into DC-1 as user: mydomain.com\labuser or whatever you created. I'll login as jcdomain.com\labuser
+	- Promote it as a domain controller and set up a new forest as mydomain.com or anything else. I'll be using jcdomain.com
+	- Restart the machine and log into DC-1 as user: mydomain.com\labuser or whatever you created. I'll log in as jcdomain.com\labuser
 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 4. Create an Admin and Normal User Account in AD
-	- Go to Active Directory Users and Computers to create an Organization Unit call "_Employees"
-	- Create another OU called "_Admins"
-	- *** Within _Admins i believe*** create an employee name Jane Doe with the username of jane_admin
+	- Go to Active Directory Users and Computers to create an Organization Unit called "_Employees."
+	- Create another OU called "_Admins."
+	- *** Within _Admins, I believe*** create an employee name Jane Doe with the username of jane_admin
 	- Go to the security group and add jane_admin to Domain Admins
-	- Log out and close RDP connection to DC-1
+	- Log out and close the RDP connection to DC-1
 	- Log back into DC-1 as mydomain.com\jane_admin. My login will be jcdomain.com\jane_admin
 
 <p>
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
-5. Join Client-1 to your domain
-	- Go to azure portal (not in vm) set Client-1's DNS setting to DC's private IP address
+5. Join Client-1 in your domain
+	- Go to the Azure portal (not in vm) and set Client-1's DNS setting to DC's private IP address
 	- Restart Client-1's vm and log back into as labuser
 	- Go to DC-1 and verify that Client-1 shows up in ADUC in the computers container on the root of the domain
 	- Create another OU named _Clients and drag Client-1 in there
@@ -88,7 +88,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 6. Setup Remote Desktop for non-administrative users on client-1
 	- Log into Client-1 as mydomain.com/jane-admin
-	- Go to system properties => Remote Desktop => allow "domain users" access to remote desktop
+	- Go to system properties => Remote desktop => allow "domain users" access to remote desktop
 	- This will allow you to log into Client-1 as a non-administrator user
 	- Note to change many systems, you would use this with a Group Policy
 
@@ -99,7 +99,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 7. Create additional users and attempt to log into client-1 with one of the users
 	- If not already, log into DC-1 as jane-admin
 	- Open PowerShell_ise as an administrator
-	- Create a new file and paste contents of the script into it.
+	- Create a new file and paste the script's contents into it.
 		- This script was created by instructed for us to practice with
 		- It includes hundreds of generated names, creating users
 	- Run the script and watch the accounts being created
