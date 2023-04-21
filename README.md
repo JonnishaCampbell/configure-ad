@@ -30,10 +30,6 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <h2>Deployment and Configuration Steps</h2>
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-
 1. Setup Resources in Azure
 	- Create a Domain Controller VM, Windows Server 2022, and name it DC-1
 	- Set the Domain Controller's NIC private IP address to be static
@@ -42,7 +38,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
 	- Go to Network Watcher and check topology (making sure that the Resource group and Virtual machine are running on the same virtual network)
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/DEU9x0j.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/AtDHufO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 2. Ensure Connectivity between the client and domain controller VM
@@ -52,7 +51,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 	- Go back to the Client-1 command prompt to see if the ping is successful
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/6XNwLdQ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 3. Install Active Directory
@@ -61,19 +60,22 @@ This tutorial outlines the implementation of on-premises Active Directory within
 	- Restart the machine and log into DC-1 as user: mydomain.com\labuser or whatever you created. I'll log in as jcdomain.com\labuser
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/aWqaNA9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/cBBeVVg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 4. Create an Admin and Normal User Account in AD
 	- Go to Active Directory Users and Computers to create an Organization Unit called "_Employees."
 	- Create another OU called "_Admins."
-	- *** Within _Admins, I believe*** create an employee name Jane Doe with the username of jane_admin
+	- Within _Admins, create an employee name Jane Doe with the username of jane_admin
 	- Go to the security group and add jane_admin to Domain Admins
 	- Log out and close the RDP connection to DC-1
 	- Log back into DC-1 as mydomain.com\jane_admin. My login will be jcdomain.com\jane_admin
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/JbPXPqJ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 5. Join Client-1 in your domain
@@ -83,29 +85,49 @@ This tutorial outlines the implementation of on-premises Active Directory within
 	- Create another OU named _Clients and drag Client-1 in there
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/Ko1xuOQ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/P3QVB73.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/dFwacBU.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 6. Setup Remote Desktop for non-administrative users on client-1
-	- Log into Client-1 as mydomain.com/jane-admin
+	- Log into Client-1 as mydomain.com/jane_admin
 	- Go to system properties => Remote desktop => allow "domain users" access to remote desktop
 	- This will allow you to log into Client-1 as a non-administrator user
 	- Note to change many systems, you would use this with a Group Policy
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/NJATXAr.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 
 7. Create additional users and attempt to log into client-1 with one of the users
 	- If not already, log into DC-1 as jane-admin
 	- Open PowerShell_ise as an administrator
-	- Create a new file and paste the script's contents into it.
-		- This script was created by instructed for us to practice with
+	- Create a new file and paste the script's contents into it (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+		- This script was created by instructor for practice
 		- It includes hundreds of generated names, creating users
 	- Run the script and watch the accounts being created
 	- Go to ADUC and watch the accounts in the appropriate OU
 	- Log into Client-1 with one of the accounts created
 		- The password will be in the script
+		- I'll be remotely logging in as the user lenur.nibo instead of admin
+		- Go to Windows PowerShell or command prompt, if you want to verify
+<p>
+<img src="https://i.imgur.com/NPUBnDF.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/7mySEDk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/9fwTLa5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/r0JqiVv.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
 </p>
 <br />
 
